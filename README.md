@@ -49,6 +49,7 @@ This is example.
 
 You can change issue status.
 
+- Open -> In Progress
 - In Progress -> Done
 - Done -> Finished
 
