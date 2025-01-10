@@ -8,6 +8,8 @@ This is GROWI plugin for [Backlog](https://backlog.com/).
 
 You have to get API key from Backlog in personal setting.
 
+![](./images/002.jpg)
+
 ### Write markdown in GROWI
 
 #### Get projects
@@ -15,6 +17,14 @@ You have to get API key from Backlog in personal setting.
 ```markdown
 ::backlog[projects]{host=example.backlog.com}
 ```
+
+At first, you should input your backlog API key. It is stored in your browser local storage.
+
+![](./images/001.jpg)
+
+After that, you can get projects like below.
+
+![](./images/006.jpg)
 
 ##### Options
 
@@ -35,6 +45,8 @@ This is example.
 ::backlog[issues]{host=example.backlog.com}
 ```
 
+![](./images/003.jpg)
+
 ##### Options
 
 You can specify options from [Get Issue List \| Backlog Developer API \| Nulab](https://developer.nulab.com/docs/backlog/api/2/get-issue-list/).
@@ -52,6 +64,8 @@ You can change issue status.
 - Open -> In Progress
 - In Progress -> Done
 - Done -> Finished
+
+![](./images/005.jpg)
 
 ## License
 
