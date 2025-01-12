@@ -9,7 +9,6 @@ import { visit } from 'unist-util-visit';
 export const Backlog = (Tag: React.FunctionComponent<any>): React.FunctionComponent<any> => {
   const keyName = 'BACKLOG_API_KEY';
   return ({ children, ...props }) => {
-    const apiKey = localStorage.getItem(keyName);
     const save = () => {
       // e.preventDefault();
       const { value } = document.querySelector('#backlogApiKey') as HTMLInputElement;
@@ -18,32 +17,38 @@ export const Backlog = (Tag: React.FunctionComponent<any>): React.FunctionCompon
       window.location.reload();
     };
 
-    if (!apiKey) {
-      return (
-        <>
-          <p>Backlog APIキーを取得してください</p>
-          <div className="mb-3">
-            <label htmlFor="backlogApiKey" className="form-label">APIキー</label>
-            <input
-              type="password"
-              className="form-control"
-              id="backlogApiKey"
-              placeholder="APIキー"
-            />
-          </div>
-          <div className="mb-3">
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={save}
-            >保存</button>
-          </div>
-        </>
-      );
-    }
     try {
       const { node } = props;
       const { host, ...params } = JSON.parse(node.properties.title);
+      if (!params.backlog) {
+        return (
+          <Tag {...props}>{children}</Tag>
+        );
+      }
+      const apiKey = localStorage.getItem(keyName);
+      if (!apiKey) {
+        return (
+          <>
+            <p>Backlog APIキーを取得してください</p>
+            <div className="mb-3">
+              <label htmlFor="backlogApiKey" className="form-label">APIキー</label>
+              <input
+                type="password"
+                className="form-control"
+                id="backlogApiKey"
+                placeholder="APIキー"
+              />
+            </div>
+            <div className="mb-3">
+              <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={save}
+              >保存</button>
+            </div>
+          </>
+        );
+      }
       if (!host) {
         return (<>hostパラメータは必須です</>);
       }
@@ -248,7 +253,7 @@ export const remarkPlugin: Plugin = () => {
       data.hChildren = [{ type: 'text', value: action || 'projects' }]; // Children
       // Set properties
       data.hProperties = {
-        title: JSON.stringify(n.attributes), // Pass to attributes to the component
+        title: JSON.stringify({ ...n.attributes, ...{ backlog: true } }), // Pass to attributes to the component
       };
     });
   };
